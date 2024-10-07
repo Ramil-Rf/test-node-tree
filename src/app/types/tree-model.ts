@@ -4,5 +4,3 @@ export type TreeNode = {
   isOpen: boolean;
   parent: TreeNode | null;
 };
-
-export type Tree = TreeNode[];

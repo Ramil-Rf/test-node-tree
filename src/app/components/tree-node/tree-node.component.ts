@@ -1,5 +1,13 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+} from '@angular/core';
 import { TreeNode } from '../../types/tree-model';
+import { TreeNodeService } from '../../services/tree-node.service';
 
 @Component({
   selector: 'app-tree-node',
@@ -7,54 +15,34 @@ import { TreeNode } from '../../types/tree-model';
   imports: [],
   templateUrl: './tree-node.component.html',
   styleUrl: './tree-node.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TreeNodeComponent {
+  private treeService = inject(TreeNodeService);
   @Input() node!: TreeNode;
   @Output() deleteNode = new EventEmitter<TreeNode>();
 
-  toggleNode(event: Event) {
+  public toggleNode(event: Event) {
     event.stopPropagation();
-    this.node.isOpen = !this.node.isOpen;
+    this.treeService.toggleNode(this.node);
   }
 
-  addChild(event: Event) {
+  public addChild(event: Event) {
     event.stopPropagation();
     const childName = prompt('Введите название дочерней ноды:');
     if (childName) {
-      const newChild: TreeNode = {
-        name: childName,
-        isOpen: false,
-        children: [],
-        parent: this.node,
-      };
-      if (!this.node.children) {
-        this.node.children = []; // Инициализируем массив детей, если он не существует
-      }
-
-      this.node.children.push(newChild); // Добавляем нового ребенка
+      this.treeService.addNode(this.node, childName);
     }
   }
 
-  removeNode(event: Event) {
+  public removeNode(event: Event) {
     event.stopPropagation();
     this.deleteNode.emit(this.node);
   }
 
-  showPath(event: Event) {
+  public showPath(event: Event) {
     event.stopPropagation();
-    const path = this.getPathToNode(this.node);
+    const path = this.treeService.getPathToNode(this.node);
     console.log(path);
-  }
-
-  getPathToNode(node: TreeNode): string {
-    const path: string[] = [];
-    let currentNode: TreeNode | null = node;
-
-    while (currentNode) {
-      path.unshift(currentNode.name); // Добавляем имя узла в начало массива
-      currentNode = currentNode.parent; // Переходим к родительскому узлу
-    }
-
-    return path.join(' > '); // Возвращаем путь в виде строки
   }
 }

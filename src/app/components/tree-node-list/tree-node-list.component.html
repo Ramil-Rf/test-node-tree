@@ -1,5 +1,8 @@
-<ul>
-  @for (node of treeExample; track node) {
-    <app-tree-node [node]="node" (deleteNode)="removeNode($event, treeExample)"></app-tree-node> <!-- Вызов компонента для каждого узла -->
-  }
-</ul>
+@if (tree$ | async; as tree) {
+  <ul>
+    @for (node of tree; track node) {
+      <app-tree-node [node]="node" (deleteNode)="removeNode($event, tree)"></app-tree-node> <!-- Вызов компонента для каждого узла -->
+    }
+  </ul>
+}
+
