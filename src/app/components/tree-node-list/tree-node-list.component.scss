@@ -1,0 +1,10 @@
+:host {
+  display: block;
+}
+
+@media (max-width: 567px) {
+  :host {
+    min-width: 320px;
+    overflow-x: auto;;
+  }
+}

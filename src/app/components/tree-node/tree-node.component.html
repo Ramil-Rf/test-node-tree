@@ -1,8 +1,13 @@
-<li (click)="toggleNode($event)" style="cursor: pointer;">
-  {{ node.isOpen ? '▼' : '►' }} {{ node.name }}
-  <button (click)="removeNode($event)">Удалить</button>
-  <button (click)="addChild($event)">Добавить дочернюю ноду</button>
-  <button (click)="showPath($event)">Показать путь</button>
+<li class="tree-node">
+  <span class="tree-node-name" (click)="toggleNode($event)">
+    {{ node.isOpen ? '▼' : '►' }} {{ node.name }}
+  </span>
+  <div class="tree-node-btns">
+    <button class="tree-node-btn" (click)="removeNode($event)">Удалить</button>
+    <button class="tree-node-btn" (click)="addChild($event)">Добавить дочернюю ноду</button>
+    <button class="tree-node-btn" (click)="showPath($event)">Показать путь</button>
+
+  </div>
   @if(node.isOpen) {
     <ul>
       @for(child of node.children; track child) {

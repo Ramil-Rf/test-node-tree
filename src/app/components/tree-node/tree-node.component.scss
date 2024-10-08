@@ -1,0 +1,20 @@
+:host {
+  display: block;
+  min-width: 320px;
+}
+
+.tree-node-name {
+  cursor: pointer;
+  display: block;
+  margin: 10px 10px 10px 0px;
+}
+
+.tree-node-btns {
+  display: inline-block;
+  border-bottom: 1px solid #000000;
+}
+
+.tree-node-btn {
+  cursor: pointer;
+  margin: 0px 10px 10px 0px;
+}
